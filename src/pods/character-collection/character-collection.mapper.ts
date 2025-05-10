@@ -2,7 +2,7 @@ import * as am from './api';
 import * as vm from './character-collection.vm';
 
 const mapCharacterToVm = (
-  character: am.CharacterMemberApiModel
+  character: am.Character
 ): vm.CharacterViewModel => ({
   id: character.id,
   name: character.name,
@@ -10,6 +10,8 @@ const mapCharacterToVm = (
 });
 
 export const mapCharacterCollectionToVm = (
-  characterCollectionApi: am.CharacterMemberApiModel[]
-): vm.CharacterViewModel[] =>
-  characterCollectionApi ? characterCollectionApi.map(character => mapCharacterToVm(character)) : [];
+  characterCollectionApi: am.CharacterListResponse
+): vm.CharacterViewModel[] => {
+  const characters = characterCollectionApi.results;
+  return characters ? characters.map(character => mapCharacterToVm(character)) : [];
+}
